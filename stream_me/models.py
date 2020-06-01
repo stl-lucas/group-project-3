@@ -35,9 +35,30 @@ class Shows(db.Model):
     def __repr__(self):
         return f"TV Show('{self.id}', '{self.title}')"
 
+class Directors(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), unique=True, nullable=False)
+
+    def __repr__(self):
+        return f"Director('{self.id}', '{self.name}')"
+
 class Genres(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(50), unique=True, nullable=False)
 
     def __repr__(self):
         return f"Genre('{self.id}', '{self.description}')"
+
+class Countries(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), unique=True, nullable=False)
+
+    def __repr__(self):
+        return f"Country('{self.id}', '{self.name}')"
+
+class Languages(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String(50), unique=True, nullable=False)
+
+    def __repr__(self):
+        return f"Language('{self.id}', '{self.description}')"
