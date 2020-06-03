@@ -1,10 +1,14 @@
 from flask import render_template, url_for, flash, redirect, request, jsonify
 from stream_me import app, db
-from stream_me.models import Movies, Shows, Directors, Genres, Countries, Languages
+from stream_me.models import Movies, Shows, Genres, Countries, Languages
 
 @app.route("/")
 def home():
     return render_template("index.html")
+
+@app.route("/interview")
+def interview():
+    return render_template("interview.html")
 
 @app.route("/movies")
 def movies():
@@ -48,14 +52,6 @@ def shows():
             'disney': show.disney
         })
     return jsonify(shows)
-
-@app.route("/directors")
-def directors():
-    directors = []
-    director_list = Directors.query.all()
-    for director in director_list:
-        directors.append({'id': director.id, 'name': director.name})
-    return jsonify(directors)
 
 @app.route("/genres")
 def genres():
