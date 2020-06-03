@@ -11,10 +11,17 @@ def home():
 def dashboard():
     return render_template("dashboard.html")
 
-@app.route("/analyze")
+@app.route("/analyze", methods=['GET', 'POST'])
 def analyze():
-    # Needs to return generic visualizations/analysis
-    return render_template("analyze.html")
+    if request.method == 'POST':
+        # Needs to return user specific visualizations/analysis
+        # email = request.form['email']
+        # code = request.form['code']
+        # user = Users.query.filter_by(email=email).filter_by(code=code).first()
+        return render_template("analyze.html", user=user)
+    else:
+        # Needs to return generic visualizations/analysis
+        return render_template("analyze.html")
 
 @app.route("/api")
 def api():
