@@ -2,7 +2,7 @@ from stream_me import db
 
 class Movies(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(120), unique=True, nullable=False)
+    title = db.Column(db.String(120), unique=False, nullable=False)
     year = db.Column(db.Integer, unique=False, nullable=False)
     min_age = db.Column(db.Integer, unique=False, nullable=True)
     imdb_score = db.Column(db.Float, unique=False, nullable=True)
@@ -22,7 +22,7 @@ class Movies(db.Model):
 
 class Shows(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), unique=True, nullable=False)
+    title = db.Column(db.String(100), unique=False, nullable=False)
     year = db.Column(db.Integer, unique=False, nullable=False)
     min_age = db.Column(db.Integer, unique=False, nullable=True)
     imdb_score = db.Column(db.Float, unique=False, nullable=True)
@@ -34,13 +34,6 @@ class Shows(db.Model):
 
     def __repr__(self):
         return f"TV Show('{self.id}', '{self.title}')"
-
-class Directors(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), unique=True, nullable=False)
-
-    def __repr__(self):
-        return f"Director('{self.id}', '{self.name}')"
 
 class Genres(db.Model):
     id = db.Column(db.Integer, primary_key=True)

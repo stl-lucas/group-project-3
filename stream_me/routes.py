@@ -1,12 +1,71 @@
 from flask import render_template, url_for, flash, redirect, request, jsonify
 from stream_me import app, db
-from stream_me.models import Movies, Shows, Directors, Genres, Countries, Languages
+from stream_me.models import Movies, Shows, Genres, Countries, Languages
 
 @app.route("/")
 def home():
+    # Needs new landing page template
     return render_template("index.html")
 
-@app.route("/movies")
+@app.route("/dashboard")
+def dashboard():
+    return render_template("dashboard.html")
+
+@app.route("/analyze", methods=['GET', 'POST'])
+def analyze():
+    if request.method == 'POST':
+        # Needs to return user specific visualizations/analysis
+        # email = request.form['email']
+        # code = request.form['code']
+        # user = Users.query.filter_by(email=email).filter_by(code=code).first()
+        return render_template("analyze.html", user=user)
+    else:
+        # Needs to return generic visualizations/analysis
+        return render_template("analyze.html")
+
+@app.route("/api")
+def api():
+    return render_template("api.html")
+
+@app.route("/interview", methods=['GET', 'POST'])
+def interview():
+    if request.method == 'POST':
+        # email = request.form['email']
+        # code = '123456789' # Random Code
+        # user_data = {
+        #     'genres': request.form['genres'],
+        #     'children': request.form['children'],
+        #     'ages': request.form['ages'],
+        #     'language': request.form['language'],
+        #     'countries': request.form['countries'],
+        #     'types': request.form['types'],
+        #     'favorites': request.form['favorites'],
+        #     'birthdate': request.form['birthdate']
+        # }
+        # user = Users(email=email, code=code, interview=user_data)
+        # if Users.query.filter_by(email=email).first():
+        #     flash(f'User email already exists.', 'danger')
+        #     return redirect(url_for('interview'))
+        # else:
+        #     db.session.add(user)
+        #     db.session.commit()
+        #     user = Users.query.filter_by(email=email).first()
+        #     flash(f'Congratulations, your prediciton results are ready!', 'success')
+        return redirect(url_for('prediction?code={{ user.code }}'))
+    else:
+        return render_template("interview.html")
+
+@app.route("/prediction")
+def prediction():
+    if 'code' in request.args:
+        code = request.args['code']
+        #user = Users.query.filter_by(code=code).first()
+        return render_template("prediction.html")
+    else:
+        flash(f'Uh-oh. No user has been found! Please try again.', 'danger')
+        return render_template("prediction.html")
+
+@app.route("/api/v1/movies")
 def movies():
     movies = []
     movie_list = Movies.query.all()
@@ -30,7 +89,7 @@ def movies():
         })
     return jsonify(movies)
 
-@app.route("/shows")
+@app.route("/api/v1/shows")
 def shows():
     shows = []
     show_list = Shows.query.all()
@@ -49,15 +108,7 @@ def shows():
         })
     return jsonify(shows)
 
-@app.route("/directors")
-def directors():
-    directors = []
-    director_list = Directors.query.all()
-    for director in director_list:
-        directors.append({'id': director.id, 'name': director.name})
-    return jsonify(directors)
-
-@app.route("/genres")
+@app.route("/api/v1/genres")
 def genres():
     genres = []
     genre_list = Genres.query.all()
@@ -65,7 +116,7 @@ def genres():
         genres.append({'id': genre.id, 'description': genre.description})
     return jsonify(genres)
 
-@app.route("/countries")
+@app.route("/api/v1/countries")
 def countries():
     countries = []
     country_list = Countries.query.all()
@@ -73,7 +124,7 @@ def countries():
         countries.append({'id': country.id, 'name': country.name})
     return jsonify(countries)
 
-@app.route("/languages")
+@app.route("/api/v1/languages")
 def languages():
     languages = []
     language_list = Languages.query.all()
