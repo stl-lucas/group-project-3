@@ -9,5 +9,24 @@
     {% endfor %}
     {% endif %}
     {% endwith %}
-    <h1>Home Page</h1>
+
+<img class="centered-image" src="static/images/videoplayericon.jpg">
+
+    <h1>stream.me</h1>
+    <h4>Streaming prediction tailored to your interests.</h4>
+<div class="centered-buttons">
+    <button class="button2">
+         Predict
+    </button>
+
+    <button class="button1">
+        Analyze
+   </button>
+</div>
+
+   <div id="chart"></div>
+
+   <script src="https://d3js.org/d3.v4.min.js"></script>
+   <script type="text/javascript" src="static/js/scatterPlot.js"></script>
+
 {% endblock content %}

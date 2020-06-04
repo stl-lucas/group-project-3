@@ -1,0 +1,50 @@
+body{
+    background-color:#264fb5;
+}
+
+h1{
+    text-align: center;
+    color: white;
+}
+
+h4{
+    text-align: center;
+    color: white;
+}
+
+button{
+    border-radius: 8px;
+    color: white;
+    text-align: center;
+}
+
+.centered-buttons{
+    text-align:center;
+}
+
+.centered-image{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 10%;
+    height: auto;
+}
+
+.button1{
+    background-color: #264fb5;
+    border-color: white;
+    /* border-radius:8px;} */
+}
+
+.button2{
+    background-color: #f28449;
+    border-color: #f28449;
+}
+.navbar navbar-expand-lg navbar-dark bg-dark{
+    background-color:#264fb5;
+}
+
+footer .bg-dark {
+    background-color: #264fb5;
+
+}
