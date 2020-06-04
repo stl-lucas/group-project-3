@@ -10,9 +10,10 @@
         {% endif %}
         <!-- CSS only -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" href="static/style.css">
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark"> <!--took "bg-dark" out of class to reflect sample page-->
             <div class="container">
                 <a class="navbar-brand" href="#">stream.me</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,7 +29,7 @@
                             Dropdown
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="/#">page 1</a>
+                            <a class="dropdown-item" href="interview.html">Interview</a>
                             <a class="dropdown-item" href="/#">page 2</a>
                         </div>
                     </li>
@@ -40,7 +41,7 @@
             {% block content %}{% endblock %}
             </div>
         </main>
-        <footer class="p-3 mb-2 bg-dark text-white">
+        <footer class="p-3 mb-2 text-white">  <!--took "bg-dark" out of class to reflect sample page-->
             <div class="container text-center">
                 <p>&copy; 2020 | All Rights Reserved.</p>
             </div>
