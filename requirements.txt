@@ -15,7 +15,6 @@ Flask-SQLAlchemy==2.4.1
 geojson==2.5.0
 gmaps==0.9.0
 gunicorn==20.0.4
-heroku==0.1.4
 heroku3==4.2.1
 idna==2.9
 importlib-metadata==1.5.0
