@@ -13,44 +13,57 @@
                   <input type="text" class="form-control" id="email" placeholder="email@example.com">
                 </div>
                 <div class="form-group mx-sm-3 mb-2">
-                  <label for="code" class="sr-only">Password</label>
+                  <label for="code" class="sr-only">Code</label>
                   <input type="text" class="form-control" id="code" placeholder="Random Code">
                 </div>
                 <button type="submit" class="btn btn-primary mb-2">Load Prediction</button>
                 <a class="btn btn-secondary mb-2 ml-2" href="/interview" role="button">Create New Prediction</a>
-              </form>
+            </form>
         </div>
     </div>
     {% endif %}
     <div class="row">
-        <div class="col-md-12">
-            <img src="static/img/visualization1.png" width="100%">
+        <div class="col-md-3 col-sm-6">
+            <div class="card" id="ratingNetflix">
+                <div class="card-body">
+                    <h5 class="card-title"><img src="static/img/netflix.svg" width="150px" style="border-radius: 5%;" /></h5>
+                    <p class="card-text"></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card" id="ratingHulu">
+                <div class="card-body">
+                    <h5 class="card-title"><img src="static/img/hulu.svg" width="150px" style="border-radius: 5%;" /></h5>
+                    <p class="card-text"></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card" id="ratingPrime">
+                <div class="card-body">
+                    <h5 class="card-title"><img src="static/img/amazon_prime.svg" width="150px" style="border-radius: 5%;" /></h5>
+                    <p class="card-text"></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card" id="ratingDisney">
+                <div class="card-body">
+                    <h5 class="card-title"><img src="static/img/disney_plus.svg" width="150px" style="border-radius: 5%;" /></h5>
+                    <p class="card-text"></p>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6 col-sm-12">
-            <img src="static/img/visualization2.png" width="100%">
-        </div>
-        <div class="col-md-6 col-sm-12">
-            <img src="static/img/visualization3.png" width="100%">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 col-sm-12">
-            <div id="movies"></div>
-        </div>
-        <div class="col-md-6 col-sm-12">
-            <img src="static/img/visualization4.png" width="100%">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 col-sm-12">
-            <img src="static/img/visualization2.png" width="100%">
-        </div>
-        <div class="col-md-6 col-sm-12">
-            <img src="static/img/visualization2.png" width="100%">
+        <div class="col-md-12 col-sm-12">
+            <div class="card">
+                <div id="titles"></div>
+            </div>
         </div>
     </div>
     <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="{{ url_for('static', filename='js/logic.js') }}"></script>
 {% endblock content %}
