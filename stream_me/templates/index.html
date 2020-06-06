@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "landing_layout.html" %}
 {% block content %}
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -9,5 +9,24 @@
     {% endfor %}
     {% endif %}
     {% endwith %}
-    <h1>Home Page</h1>
+
+<img class="centered-image" src="static/images/videoplayericon.jpg">
+
+    <h1>stream.me</h1>
+    <h4>Streaming prediction tailored to your interests.</h4>
+<div class="centered-buttons">
+    <a href="/interview" class="button2 btn btn-link">
+         Predict
+    </a>
+
+    <a href="/analyze" class="button1 btn btn-link">
+        Analyze
+    </a>
+</div>
+
+   <div id="chart"></div>
+
+   <script src="https://d3js.org/d3.v4.min.js"></script>
+   <script type="text/javascript" src="static/js/scatterPlot.js"></script>
+
 {% endblock content %}
