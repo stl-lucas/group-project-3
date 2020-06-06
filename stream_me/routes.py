@@ -68,7 +68,7 @@ def prediction():
 @app.route("/api/v1/movies")
 def movies():
     movies = []
-    movie_list = Movies.query.all()
+    movie_list = Movies.query.order_by(Movies.id).all()
     for movie in movie_list:
         movies.append({
             'id': movie.id,
@@ -92,7 +92,7 @@ def movies():
 @app.route("/api/v1/shows")
 def shows():
     shows = []
-    show_list = Shows.query.all()
+    show_list = Shows.query.order_by(Shows.id).all()
     for show in show_list:
         shows.append({
             'id': show.id,
@@ -108,10 +108,21 @@ def shows():
         })
     return jsonify(shows)
 
+@app.route("/api/v1/titles")
+def titles():
+    titles = []
+    movie_list = Movies.query.all()
+    show_list = Shows.query.all()
+    for movie in movie_list:
+        titles.append({'title': movie.title})
+    for show in show_list:
+        titles.append({'title': show.title})
+    return jsonify(titles)
+
 @app.route("/api/v1/genres")
 def genres():
     genres = []
-    genre_list = Genres.query.all()
+    genre_list = Genres.query.order_by(Genres.description).all()
     for genre in genre_list:
         genres.append({'id': genre.id, 'description': genre.description})
     return jsonify(genres)
@@ -119,7 +130,7 @@ def genres():
 @app.route("/api/v1/countries")
 def countries():
     countries = []
-    country_list = Countries.query.all()
+    country_list = Countries.query.order_by(Countries.name).all()
     for country in country_list:
         countries.append({'id': country.id, 'name': country.name})
     return jsonify(countries)
@@ -127,7 +138,7 @@ def countries():
 @app.route("/api/v1/languages")
 def languages():
     languages = []
-    language_list = Languages.query.all()
+    language_list = Languages.query.order_by(Languages.description).all()
     for language in language_list:
         languages.append({'id': language.id, 'description': language.description})
     return jsonify(languages)
