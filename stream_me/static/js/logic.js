@@ -66,7 +66,7 @@ d3.json(movieUrl).then(function(movieData) {
     });
 
     // Build Avg Display
-    d3.select("#ratingNetflix").selectAll(".card-text").html(`Avg IMDB:  ${avgImdb[0]}<br/>Avg Rotten Tomatoes: ${avgTomato[0]}%`)
+    d3.select("#ratingNetflix").selectAll("p").html(`Avg IMDB:  ${avgImdb[0]}<br/>Avg Rotten Tomatoes: ${avgTomato[0]}%`)
     d3.select("#ratingHulu").selectAll("p").html(`Avg IMDB:  ${avgImdb[1]}<br/>Avg Rotten Tomatoes: ${avgTomato[1]}%`)
     d3.select("#ratingPrime").selectAll("p").html(`Avg IMDB:  ${avgImdb[2]}<br/>Avg Rotten Tomatoes: ${avgTomato[2]}%`)
     d3.select("#ratingDisney").selectAll("p").html(`Avg IMDB:  ${avgImdb[3]}<br/>Avg Rotten Tomatoes: ${avgTomato[3]}%`)
