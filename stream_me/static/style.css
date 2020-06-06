@@ -12,6 +12,10 @@ h4{
     color: white;
 }
 
+a:visited{
+    color: white;
+}
+
 button{
     border-radius: 8px;
     color: white;
@@ -20,6 +24,7 @@ button{
 
 .centered-buttons{
     text-align:center;
+
 }
 
 .centered-image{
@@ -31,12 +36,13 @@ button{
 }
 
 .button1{
+    color: white;
     background-color: #264fb5;
     border-color: white;
-    /* border-radius:8px;} */
 }
 
 .button2{
+    color: white;
     background-color: #f28449;
     border-color: #f28449;
 }
