@@ -5,6 +5,7 @@ d3.json("/api/v1/movies", function (movies) {
         return movie.rotten_tomatoes && movie.imdb_score;
     })
     // console.log("movies filtered length: ", filteredMovies.length)
+    console.log("filtered movies: ", filteredMovies);
 
     // Chart area
     var chart_width = 800;
@@ -18,11 +19,11 @@ d3.json("/api/v1/movies", function (movies) {
 
     // Create scales
     var x_scale = d3.scaleLinear()
-        .domain(0, 10)
+        .domain([0, 10])
         .range([padding, chart_height]);
 
     var y_scale = d3.scaleLinear()
-        .domain(0, 100)
+        .domain([0, 100])
         .range([0, chart_width]);
 
     var r_scale = d3.scaleLinear()
@@ -32,7 +33,8 @@ d3.json("/api/v1/movies", function (movies) {
         .range([5, 30]);            //range chosen so that min won't be too low
                                     //to see, and max is not bigger than padding
 
-    var x_axis = d3.axisBottom(x_scale)
+    var x_axis = d3.axisBottom(x_scale);
+    var y_axis = d3.axisLeft(y_scale);
 
 
     // Create SVG element
@@ -49,6 +51,14 @@ d3.json("/api/v1/movies", function (movies) {
         )
         .call(x_axis);
 
+    svg.append('g')
+    .attr('class', 'y-axis')
+    .attr(
+        'transform',
+        'translate(0,' + (chart_width - padding) + ')'
+    )
+    .call(y_axis);
+
     // Calculate radius
     function calculateRadius(movie) {
         if (movie.imdb_score && movie.rotten_tomatoes) {
@@ -63,7 +73,7 @@ d3.json("/api/v1/movies", function (movies) {
         .enter()
         .append('circle')
         .attr('cx', function (d) { 
-            console.log('imbdb: ', d.imdb_score);  // d represents the current value in the array
+            // console.log('imbdb: ', d.imdb_score);  // d represents the current value in the array
             return x_scale(d.imdb_score);           // since the example contained a set of arrays
         })
         .attr('cy', function (d) {
