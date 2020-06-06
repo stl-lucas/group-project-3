@@ -1,4 +1,4 @@
-d3.json("/movies", function (movies) {
+d3.json("/api/v1/movies", function (movies) {
 
     // console.log("movies length before filter: ", movies.length);
     filteredMovies = movies.filter(movie => {

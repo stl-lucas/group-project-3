@@ -44,13 +44,11 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6 col-sm-12">
-            <img src="static/img/visualization2.png" width="100%">
-        </div>
-        <div class="col-md-6 col-sm-12">
-            <img src="static/img/visualization2.png" width="100%">
+        <div class="col-md-12 col-sm-12">
+            <div id="chart"></div>
         </div>
     </div>
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="{{ url_for('static', filename='js/logic.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/scatterPlot.js') }}"></script>
 {% endblock content %}
