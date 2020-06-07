@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 
 app = Flask(__name__)
-env = 'prod'
+env = 'dev'
 
 if env == 'dev':
     from stream_me import config
