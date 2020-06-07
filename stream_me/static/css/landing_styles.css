@@ -1,14 +1,25 @@
 body{
     background-color:#264fb5;
+    padding-top: 80px;
+    padding-bottom: 40px;
 }
+
+.landing-page {
+    width: 100%;
+    max-width: 600px;
+    padding: 15px;
+    margin: auto;
+  }
 
 h1{
     text-align: center;
+    font-size: 5em;
     color: white;
 }
 
 h4{
     text-align: center;
+    font-size: 1.5em;
     color: white;
 }
 
@@ -31,7 +42,7 @@ button{
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 10%;
+    width: 50%;
     height: auto;
 }
 
@@ -45,12 +56,4 @@ button{
     color: white;
     background-color: #f28449;
     border-color: #f28449;
-}
-.navbar navbar-expand-lg navbar-dark bg-dark{
-    background-color:#264fb5;
-}
-
-footer .bg-dark {
-    background-color: #264fb5;
-
 }

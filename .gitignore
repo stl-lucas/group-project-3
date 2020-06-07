@@ -1,2 +1,4 @@
 stream_me/config.py
 __pycache__/
+*.pyc
+.ipynb_checkpoints

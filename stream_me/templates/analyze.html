@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
     <h3>Streaming Service Analysis</h3>
-    {% if card is not defined %}
+    {% if result is not defined %}
     <div class="row">
         <div class="col-md-12">
             <form class="form-inline float-right" action="/analyze" method="post">
@@ -19,6 +19,16 @@
                 <button type="submit" class="btn btn-primary mb-2">Load Prediction</button>
                 <a class="btn btn-secondary mb-2 ml-2" href="/interview" role="button">Create New Prediction</a>
             </form>
+        </div>
+    </div>
+    {% else %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card align-center">
+                <h3>Congratulations!</h3>
+                <img src="static/img/netflix.svg" width="300px"/>
+                <p>Your service is {{ result }}!</p>
+            </div>
         </div>
     </div>
     {% endif %}
