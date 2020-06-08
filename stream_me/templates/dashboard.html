@@ -3,54 +3,21 @@
     <h1>What is stream.me?</h1>
     <p><strong>stream.me</strong> is a service that analyzes the available movies and shows on four of the most popular streaming services. 
         We find out what you're into, then use a proprietary algorithm to select the best streaming service for you.</p>
-        <p>Want to find out which service is best for your? Click on our "Predict" button above.</p>
-    <p>We're currently analyzing the following four services:</p>
-    <div class="row">
-        <div class="col-md-6 col-sm-12">
-            <div class="card mb-4 shadow-sm">
-                <img src="static/img/netflix.svg" width="100%"/>
-              <div class="card-body">
-                <p class="card-text"><a href="https://www.netflix.com/" target="_blank">Netflix</a></p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <small class="text-muted">$8.99 per month</small>
-                </div>
-              </div>
+        <p>Want to find out which service is best for you? Click the "Predict" link above.</p>
+        <p>If you're interested in looking at the data we've used for our analysis you can visit the API docs in the footer of this site.</p>
+    {% if services|length > 0 %}<p>We're currently analyzing the following four services:</p>{% for service_batched in services|batch(2) %}
+    <div class="row">{% for service in service_batched %}
+      <div class="col-md-6 col-sm-12">
+        <div class="card mb-4 shadow-sm">
+            <img src="static/img/{{ service.logo }}" width="100%"/>
+          <div class="card-body">
+            <p class="card-text"><a href="{{ service.url }}" target="_blank">{{ service.name }}</a></p>
+            <div class="d-flex justify-content-between align-items-center">
+              <small class="text-muted">${{ service.price }} per month</small>
             </div>
           </div>
-          <div class="col-md-6 col-sm-12">
-            <div class="card mb-4 shadow-sm">
-                <img src="static/img/hulu.svg" width="100%"/>
-              <div class="card-body">
-                <p class="card-text"><a href="https://www.hulu.com/" target="_blank">Hulu</a></p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <small class="text-muted">$5.99 per month</small>
-                </div>
-              </div>
-            </div>
         </div>
-    </div>
-    <div class="row">
-          <div class="col-md-6 col-sm-12">
-            <div class="card mb-4 shadow-sm">
-                <img src="static/img/amazon_prime.svg" width="100%"/>
-              <div class="card-body">
-                <p class="card-text"><a href="https://www.primevideo.com/" target="_blank">Amazon Prime</a></p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <small class="text-muted">$12.99 per month</small>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-sm-12">
-            <div class="card mb-4 shadow-sm">
-                <img src="static/img/disney_plus.svg" width="100%"/>
-              <div class="card-body">
-                <p class="card-text"><a href="https://www.disneyplus.com/" target="_blank">Disney +</a></p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <small class="text-muted">$6.99 per month</small>
-                </div>
-              </div>
-            </div>
-          </div>
-    </div>
+      </div>{% endfor %}
+  </div>{% endfor %}{% else %}
+  <p>Sorry, We don't have any services data to show you :(. Please come back later.</p>{% endif %}
 {% endblock content %}

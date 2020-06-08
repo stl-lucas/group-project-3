@@ -26,8 +26,8 @@
         <div class="col-md-12">
             <div class="card align-center">
                 <h3>Congratulations!</h3>
-                <img src="static/img/netflix.svg" width="300px"/>
-                <p>Your service is {{ result }}!</p>
+                <img src="static/img/{{ result.logo }}" width="300px"/>
+                <p>Your service is {{ result.name }}!</p>
             </div>
         </div>
     </div>
@@ -36,7 +36,7 @@
         <div class="col-md-3 col-sm-6">
             <div class="card" id="ratingNetflix">
                 <div class="card-body">
-                    <h5 class="card-title"><img src="static/img/netflix.svg" width="150px" style="border-radius: 5%;" /></h5>
+                    <h5 class="card-title"><img src="static/img/netflix.svg" width="150px" style="border-radius: 2%;" /></h5>
                     <p class="card-text"></p>
                 </div>
             </div>
@@ -44,7 +44,7 @@
         <div class="col-md-3 col-sm-6">
             <div class="card" id="ratingHulu">
                 <div class="card-body">
-                    <h5 class="card-title"><img src="static/img/hulu.svg" width="150px" style="border-radius: 5%;" /></h5>
+                    <h5 class="card-title"><img src="static/img/hulu.svg" width="150px" style="border-radius: 2%;" /></h5>
                     <p class="card-text"></p>
                 </div>
             </div>
@@ -52,7 +52,7 @@
         <div class="col-md-3 col-sm-6">
             <div class="card" id="ratingPrime">
                 <div class="card-body">
-                    <h5 class="card-title"><img src="static/img/amazon_prime.svg" width="150px" style="border-radius: 5%;" /></h5>
+                    <h5 class="card-title"><img src="static/img/amazon_prime.svg" width="150px" style="border-radius: 2%;" /></h5>
                     <p class="card-text"></p>
                 </div>
             </div>
@@ -60,16 +60,21 @@
         <div class="col-md-3 col-sm-6">
             <div class="card" id="ratingDisney">
                 <div class="card-body">
-                    <h5 class="card-title"><img src="static/img/disney_plus.svg" width="150px" style="border-radius: 5%;" /></h5>
+                    <h5 class="card-title"><img src="static/img/disney_plus.svg" width="150px" style="border-radius: 2%;" /></h5>
                     <p class="card-text"></p>
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12 col-sm-12">
+        <div class="col-md-6 col-sm-12">
             <div class="card">
-                <div id="chart"></div>
+                <div id="prices"></div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="card">
+                <div id="vis"></div>
             </div>
         </div>
     </div>
@@ -77,6 +82,13 @@
         <div class="col-md-12 col-sm-12">
             <div class="card">
                 <div id="titles"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="card">
+                <div id="chart"></div>
             </div>
         </div>
     </div>
