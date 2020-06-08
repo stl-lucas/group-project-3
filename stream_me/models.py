@@ -1,5 +1,15 @@
 from stream_me import db
 
+class Services(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), unique=True, nullable=False)
+    price = db.Column(db.Float, unique=False, nullable=False)
+    url = db.Column(db.String(100), unique=True, nullable=False)
+    logo = db.Column(db.String(50), unique=False, nullable=False)
+
+    def __repr__(self):
+        return f"Service('{self.id}', '{self.name}')"
+
 class Movies(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120), unique=False, nullable=False)
