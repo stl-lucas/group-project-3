@@ -186,5 +186,3 @@ d3.json(movieUrl).then(function(movieData) {
   }).catch(error => console.log(error));
 
 }).catch(error => console.log(error));
-
-
