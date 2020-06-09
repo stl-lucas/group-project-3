@@ -84,14 +84,13 @@ d3.json("api/v1/movies").then(function (movies) {
     var x_axis = d3.axisBottom(x_scale);
     var y_axis = d3.axisLeft(y_scale);
 
-
     // Create SVG element
     var svg = d3.select('#chart')
         .append('svg')
         .attr('width', chart_width)
         .attr('height', chart_height)
         .append('g')
-        .attr('transform', 'translate(125, 25)');
+        .attr('transform', 'translate(100, 30)');
 
     svg.append('g')
         .attr('class', 'x-axis')
@@ -144,10 +143,33 @@ d3.json("api/v1/movies").then(function (movies) {
             return d.name;
         })
         .attr('x', function (d) {
-            return x_scale(d.imdbTotal / d.movieCount) - (r_scale(d.movieCount)/2);
+            return x_scale(d.imdbTotal / d.movieCount) - (r_scale(d.movieCount) / 2);
         })
         .attr('y', function (d) {
             return y_scale(d.rottenTomatoesTotal / d.movieCount);
         });
+
+    //x-axis label
+    svg.append('g')
+        .attr('class', 'xLabel')
+        .selectAll('text')
+        .data(['Average IMDB Rating'])
+        .enter()
+        .append('text')
+        .attr('x', chart_width / 3)
+        .attr('y', chart_height - padding)
+        .text(function (d) { return d });
+    
+    //y-axis
+    svg.append('g')
+        .attr('class', 'yLabel')
+        .selectAll('text')
+        .data(['Average Rotten Tomatoes Rating'])
+        .enter()
+        .append('text')
+        .attr('transform', 'rotate(-90)')
+        .attr('x', 0 - chart_height + padding + padding)
+        .attr('y', 0 - padding)
+        .text(function (d) { return d })
 
 }).catch(error => console.log(error));
