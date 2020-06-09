@@ -79,7 +79,8 @@ d3.json("api/v1/movies").then(function (movies) {
 
     var r_scale = d3.scaleLinear()
         .domain([0, maxCount])
-        .range([0, 100]);
+        .range([0, 125]);
+
     var x_axis = d3.axisBottom(x_scale);
     var y_axis = d3.axisLeft(y_scale);
 
@@ -142,5 +143,11 @@ d3.json("api/v1/movies").then(function (movies) {
         .text(function (d) {
             return d.name;
         })
+        .attr('x', function (d) {
+            return x_scale(d.imdbTotal / d.movieCount) - (r_scale(d.movieCount)/2);
+        })
+        .attr('y', function (d) {
+            return y_scale(d.rottenTomatoesTotal / d.movieCount);
+        });
 
 }).catch(error => console.log(error));
