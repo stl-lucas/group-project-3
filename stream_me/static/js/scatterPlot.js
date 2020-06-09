@@ -90,7 +90,7 @@ d3.json("api/v1/movies").then(function (movies) {
         .attr('width', chart_width)
         .attr('height', chart_height)
         .append('g')
-        .attr('transform', 'translate(100, 30)');
+        .attr('transform', 'translate(100, 10)');
 
     svg.append('g')
         .attr('class', 'x-axis')
@@ -157,7 +157,8 @@ d3.json("api/v1/movies").then(function (movies) {
         .enter()
         .append('text')
         .attr('x', chart_width / 3)
-        .attr('y', chart_height - padding)
+        .style("text-anchor", "middle")
+        .attr('y', chart_height - 15)
         .text(function (d) { return d });
     
     //y-axis
