@@ -5,18 +5,20 @@
         <body style="background-color:indianred;">
         </body>
     </p>
+
     <p>
         What is the most you are willing to pay for online streaming service?
-        <select class="custom-select">
+        <select class="custom-select" id="moviesandtvshowspay">
             <option selected>Please select here</option>
             <option value="1">$5-$8</option>
             <option value="2">$9-$13</option>
             <option value="3">$14-$20</option>
           </select>
     </p>
+
     <p>
         What year group you were you born in?
-        <select class="custom-select">
+        <select class="custom-select" id="moviesandtvshowsbirthday">
             <option selected>Please select here</option>
             <option value="1">1965-1970</option>
             <option value="2">1971-1975</option>
@@ -29,7 +31,7 @@
           </select>
     </p>
         What is your favorite Movie or Tv Show Genre?
-        <select class="custom-select">
+        <select class="custom-select" id="moviesandtvshowsgenre">
             <option selected>Please select here</option>
             <option value="1">Action & Comedy</option>
             <option value="2">Comedy & Drama</option>
@@ -41,9 +43,10 @@
             <option value="8">Documentary</option>
           </select>
     </p>
+
     <p>
         What language do you view Movies and Tv Shows in?
-        <select class="custom-select">
+        <select class="custom-select" id="moviesandtvshowslanguage">
             <option selected>Please select here</option>
             <option value="1">English</option>
             <option value="2">Japanese</option>
@@ -118,9 +121,10 @@
             </var></var>
           </select>
     </p>
+
     <p>
         Which countries would you like to you view your specific Movies and Tv Shows from?
-        <select class="custom-select">
+        <select class="custom-select" id="moviesandtvshowscountries">
             <option selected>Please select here</option>
             <option value="1">United States</option>
             <option value="2">United Kingdom</option>
@@ -188,75 +192,79 @@
             </var></var>
           </select>
     </p>
+
     <p>
-        What do you enjoy more Movies, TV Shows, or Both?
-        <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="customSwitch1">
-            <label class="custom-control-label" for="customSwitch1">Movies</label>
+        What do you enjoy more Movies, Tv Shows, or Both?
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="moviesandtvshowstypes1" value="option1">
+            <label class="form-check-label" for="inlineRadio1">Movies</label>
           </div>
-          <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="customSwitch2">
-            <label class="custom-control-label" for="customSwitch2">TV Shows</label>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="moviesandtvshowstypes2" value="option2">
+            <label class="form-check-label" for="inlineRadio2">Tv Shows</label>
           </div>
-          <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="customSwitch3">
-            <label class="custom-control-label" for="customSwitch3">Both</label>
-          </div>    
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="moviesandtvshowstypes3" value="option3">
+            <label class="form-check-label" for="inlineRadio3">Both</label>
     </p>
+
     <p>
         What age appropriate content do you view Movies or Tv Shows in?
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-            <label class="form-check-label" for="inlineRadio1">G</label>
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="moviesandtvshowsages1">
+            <label class="custom-control-label" for="moviesandtvshowsages1">G</label>
           </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-            <label class="form-check-label" for="inlineRadio2">PG</label>
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="moviesandtvshowsages2">
+            <label class="custom-control-label" for="moviesandtvshowsages2">PG</label>
           </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
-            <label class="form-check-label" for="inlineRadio3">PG-13</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option4">
-            <label class="form-check-label" for="inlineRadio4">R</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-            <label class="form-check-label" for="inlineRadio2">NC-17</label>
-          </div>
-        
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="moviesandtvshowsages3">
+            <label class="custom-control-label" for="moviesandtvshowsages3">PG-13</label>
+          </div>    
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="moviesandtvshowsages4">
+            <label class="custom-control-label" for="moviesandtvshowsages14">R</label>
+          </div>    
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="moviesandtvshowsages5">
+            <label class="custom-control-label" for="moviesandtvshowsages5">NC-17</label>
+          </div>    
     </p>
+
     <p>
         Does your household size include children?
         <div class="custom-control custom-radio">
-            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-            <label class="custom-control-label" for="customRadio1">Yes</label>
+            <input type="radio" id="moviesandtvshowschildren1" name="customRadio" class="custom-control-input">
+            <label class="custom-control-label" for="moviesandtvshowschildren1">Yes</label>
           </div>
           <div class="custom-control custom-radio">
-            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-            <label class="custom-control-label" for="customRadio2">No</label>
+            <input type="radio" id="moviesandtvshowschildren2" name="customRadio" class="custom-control-input">
+            <label class="custom-control-label" for="moviesandtvshowschildren2">No</label>
           </div>
         
     </p>
+
     <p>
-        What are some of your favorite Movies or TV Shows?
+        What are some of your favorite Movies or Tv Shows?
         <div class="form-group">
             <label for="exampleFormControlTextarea1"></label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea class="form-control" id="moviesandtvshowsfavorites" rows="3"></textarea>
           </div>
     </p>
+
     <p>
-        Who are some of your favorite directors from Movies or TV Shows from different decades?
+        Who are some of your favorite directors from Movies or Tv Shows from different decades?
         <div class="form-group">
             <label for="exampleFormControlTextarea1"></label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea class="form-control" id="moviesandtvshowsdirectors" rows="3"></textarea>
           </div>
     </p>
+    
     <form>
         <div class="form-group">
           <label for="exampleInputEmail1">Email address</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+          <input type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="Enter email">
           <small id="emailHelp" class="form-text text-muted">We won't sell your email address!</small>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>

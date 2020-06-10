@@ -15,9 +15,9 @@ def dashboard():
 def analyze():
     if request.method == 'POST':
         # Needs to return user specific visualizations/analysis
-        # email = request.form['email']
-        # code = request.form['code']
-        # user = Users.query.filter_by(email=email).filter_by(code=code).first()
+        email = request.form['email']
+        code = request.form['code']
+        user = Users.query.filter_by(email=email).filter_by(code=code).first()
         return render_template("analyze.html", user=user)
     else:
         # Needs to return generic visualizations/analysis
@@ -30,27 +30,30 @@ def api():
 @app.route("/interview", methods=['GET', 'POST'])
 def interview():
     if request.method == 'POST':
-        # email = request.form['email']
-        # code = '123456789' # Random Code
-        # user_data = {
-        #     'genres': request.form['genres'],
-        #     'children': request.form['children'],
-        #     'ages': request.form['ages'],
-        #     'language': request.form['language'],
-        #     'countries': request.form['countries'],
-        #     'types': request.form['types'],
-        #     'favorites': request.form['favorites'],
-        #     'birthdate': request.form['birthdate']
-        # }
-        # user = Users(email=email, code=code, interview=user_data)
-        # if Users.query.filter_by(email=email).first():
-        #     flash(f'User email already exists.', 'danger')
-        #     return redirect(url_for('interview'))
-        # else:
-        #     db.session.add(user)
-        #     db.session.commit()
-        #     user = Users.query.filter_by(email=email).first()
-        #     flash(f'Congratulations, your prediciton results are ready!', 'success')
+        email = request.form['InputEmail']
+        code = '123456789' # Random Code
+        user_data = {
+            'genres': request.form['moviesandtvshowsgenre'],
+            'children': request.form['moviesandtvshowschildren1'],
+            'ages': request.form['moviesandtvshowspay1'],
+            'language': request.form['moviesandtvshowslanguage'],
+            'countries': request.form['moviesandtvshowscountries'],
+            'types': request.form['moviesandtvshowstypes1'],
+            'favorites': request.form['moviesandtvshowsfavorites'],
+            'birthday': request.form['moviesandtvshowsbirthday'],
+            'pay': request.form['moviesandtvshowspay'],
+            'directors': request.form['moviesandtvshowsdirectors']
+            
+        }
+        user = Users(email=email, code=code, interview=user_data)
+        if Users.query.filter_by(email=email).first():
+            flash(f'User email already exists.', 'danger')
+            return redirect(url_for('interview'))
+        else:
+            db.session.add(user)
+            db.session.commit()
+            user = Users.query.filter_by(email=email).first()
+            flash(f'Congratulations, your prediciton results are ready!', 'success')
         return redirect(url_for('prediction?code={{ user.code }}'))
     else:
         return render_template("interview.html")
