@@ -1,6 +1,10 @@
 from flask import render_template, url_for, flash, redirect, request, jsonify
 from stream_me import app, db
-from stream_me.models import Movies, Shows, Genres, Countries, Languages
+from stream_me.models import Services, Movies, Shows, Genres, Countries, Languages
+from stream_me.prediction import prediction
+from stream_me.codeUtility import generateCode
+import json, requests
+import pickle
 
 @app.route("/")
 def home():
@@ -9,66 +13,82 @@ def home():
 
 @app.route("/dashboard")
 def dashboard():
-    return render_template("dashboard.html")
+    services = Services.query.all()
+    return render_template("dashboard.html", services=services)
 
 @app.route("/analyze", methods=['GET', 'POST'])
 def analyze():
+    services = Services.query.all()
     if request.method == 'POST':
-        # Needs to return user specific visualizations/analysis
-        # email = request.form['email']
-        # code = request.form['code']
-        # user = Users.query.filter_by(email=email).filter_by(code=code).first()
-        return render_template("analyze.html", user=user)
+        email = request.form['email']
+        code = request.form['code']
+        user = Users.query.filter_by(email=email).filter_by(code=code).first()
+        state_data = pickle.loads(user.state_data)
+        result = Services.query.filter_by(name=prediction(state_data)).first()
+        return render_template("analyze.html", services=services, result=result)
     else:
-        # Needs to return generic visualizations/analysis
-        return render_template("analyze.html")
+        if 'code' in request.args:
+            code = request.args['code']
+            user = Users.query.filter_by(code=code).first()
+            state_data = pickle.loads(user.state_data)
+            result = Services.query.filter_by(name=prediction(state_data)).first()
+            return render_template("analyze.html", services=services, result=result)
+        else:
+            return render_template("analyze.html", services=services)
+
+@app.route("/interview", methods=['GET', 'POST'])
+def interview():
+    if request.method == 'POST':
+        email = request.form['InputEmail']
+        code = generateCode(5)
+        state_data = {
+            'genres': request.form['moviesandtvshowsgenre'],
+            'children': request.form['moviesandtvshowschildren1'],
+            'ages': request.form['moviesandtvshowspay1'],
+            'language': request.form['moviesandtvshowslanguage'],
+            'countries': request.form['moviesandtvshowscountries'],
+            'types': request.form['moviesandtvshowstypes1'],
+            'favorites': request.form['moviesandtvshowsfavorites'],
+            'birthday': request.form['moviesandtvshowsbirthday'],
+            'pay': request.form['moviesandtvshowspay'],
+            'directors': request.form['moviesandtvshowsdirectors']
+        }
+        user = Users(email=email, code=code, state_data=pickle.dumps(state_data))
+        
+        if Users.query.filter_by(email=email).first():
+            flash(f'User email already exists.', 'danger')
+            return redirect(url_for('interview'))
+        else:
+            db.session.add(user)
+            db.session.commit()
+            user = Users.query.filter_by(email=email).first()
+            flash(f'Congratulations, your prediciton results are ready!', 'success')
+        return redirect(url_for('analyze?code={{ user.code }}'))
+    else:
+        return render_template("interview.html")
 
 @app.route("/api")
 def api():
     return render_template("api.html")
 
-@app.route("/interview", methods=['GET', 'POST'])
-def interview():
-    if request.method == 'POST':
-        # email = request.form['email']
-        # code = '123456789' # Random Code
-        # user_data = {
-        #     'genres': request.form['genres'],
-        #     'children': request.form['children'],
-        #     'ages': request.form['ages'],
-        #     'language': request.form['language'],
-        #     'countries': request.form['countries'],
-        #     'types': request.form['types'],
-        #     'favorites': request.form['favorites'],
-        #     'birthdate': request.form['birthdate']
-        # }
-        # user = Users(email=email, code=code, interview=user_data)
-        # if Users.query.filter_by(email=email).first():
-        #     flash(f'User email already exists.', 'danger')
-        #     return redirect(url_for('interview'))
-        # else:
-        #     db.session.add(user)
-        #     db.session.commit()
-        #     user = Users.query.filter_by(email=email).first()
-        #     flash(f'Congratulations, your prediciton results are ready!', 'success')
-        return redirect(url_for('prediction?code={{ user.code }}'))
-    else:
-        return render_template("interview.html")
-
-@app.route("/prediction")
-def prediction():
-    if 'code' in request.args:
-        code = request.args['code']
-        #user = Users.query.filter_by(code=code).first()
-        return render_template("prediction.html")
-    else:
-        flash(f'Uh-oh. No user has been found! Please try again.', 'danger')
-        return render_template("prediction.html")
+@app.route("/api/v1/services")
+def services():
+    services = []
+    services_list = Services.query.order_by(Services.id).all()
+    for service in services_list:
+        services.append({
+            'id': service.id,
+            'name': service.name,
+            'price': service.price,
+            'url': service.url,
+            'logo': f'https://stream-ly.herokuapp.com/static/img/{service.logo}'
+        })
+    return jsonify(services)
 
 @app.route("/api/v1/movies")
 def movies():
     movies = []
-    movie_list = Movies.query.all()
+    movie_list = Movies.query.order_by(Movies.id).all()
     for movie in movie_list:
         movies.append({
             'id': movie.id,
@@ -92,7 +112,7 @@ def movies():
 @app.route("/api/v1/shows")
 def shows():
     shows = []
-    show_list = Shows.query.all()
+    show_list = Shows.query.order_by(Shows.id).all()
     for show in show_list:
         shows.append({
             'id': show.id,
@@ -108,10 +128,21 @@ def shows():
         })
     return jsonify(shows)
 
+@app.route("/api/v1/titles")
+def titles():
+    titles = []
+    movie_list = Movies.query.all()
+    show_list = Shows.query.all()
+    for movie in movie_list:
+        titles.append({'title': movie.title})
+    for show in show_list:
+        titles.append({'title': show.title})
+    return jsonify(titles)
+
 @app.route("/api/v1/genres")
 def genres():
     genres = []
-    genre_list = Genres.query.all()
+    genre_list = Genres.query.order_by(Genres.description).all()
     for genre in genre_list:
         genres.append({'id': genre.id, 'description': genre.description})
     return jsonify(genres)
@@ -119,7 +150,7 @@ def genres():
 @app.route("/api/v1/countries")
 def countries():
     countries = []
-    country_list = Countries.query.all()
+    country_list = Countries.query.order_by(Countries.name).all()
     for country in country_list:
         countries.append({'id': country.id, 'name': country.name})
     return jsonify(countries)
@@ -127,7 +158,7 @@ def countries():
 @app.route("/api/v1/languages")
 def languages():
     languages = []
-    language_list = Languages.query.all()
+    language_list = Languages.query.order_by(Languages.description).all()
     for language in language_list:
         languages.append({'id': language.id, 'description': language.description})
     return jsonify(languages)
