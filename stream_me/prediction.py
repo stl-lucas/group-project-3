@@ -37,10 +37,7 @@ def prediction():
     # Filter titles by Favorite Genres
     def genre(movie):
         if movie.genres:
-            if bool(set(movie.genres.split(",")) & set(user_data['genres'])):
-                return True
-            else:
-                return False
+            return bool(set(movie.genres.split(",")) & set(user_data['genres']))
         else:
             return False
 
