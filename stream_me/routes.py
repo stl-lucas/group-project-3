@@ -1,6 +1,6 @@
 from flask import render_template, url_for, flash, redirect, request, jsonify
 from stream_me import app, db
-from stream_me.models import Services, Movies, Shows, Genres, Countries, Languages
+from stream_me.models import Services, Movies, Shows, Genres, Countries, Languages, Users
 from stream_me.prediction import prediction
 from stream_me.codeUtility import generateCode
 import json, requests
@@ -22,10 +22,11 @@ def analyze():
     if request.method == 'POST':
         email = request.form['email']
         code = request.form['code']
-        user = Users.query.filter_by(email=email).filter_by(code=code).first()
+        user = Users.query.filter_by(code=code).first()
         state_data = pickle.loads(user.state_data)
         result = Services.query.filter_by(name=prediction(state_data)).first()
-        return render_template("analyze.html", services=services, result=result)
+        flash(f'Congratulations, your prediciton results are ready!', 'success')
+        return redirect(f'analyze?code={user.code}')
     else:
         if 'code' in request.args:
             code = request.args['code']
@@ -43,27 +44,25 @@ def interview():
         code = generateCode(5)
         state_data = {
             'genres': request.form['moviesandtvshowsgenre'],
-            'children': request.form['moviesandtvshowschildren1'],
-            'ages': request.form['moviesandtvshowspay1'],
+            'children': request.form['moviesandtvshowschildren'],
             'language': request.form['moviesandtvshowslanguage'],
             'countries': request.form['moviesandtvshowscountries'],
-            'types': request.form['moviesandtvshowstypes1'],
+            'types': request.form['moviesandtvshowstypes'],
             'favorites': request.form['moviesandtvshowsfavorites'],
             'birthday': request.form['moviesandtvshowsbirthday'],
-            'pay': request.form['moviesandtvshowspay'],
-            'directors': request.form['moviesandtvshowsdirectors']
+            'pay': request.form['moviesandtvshowspay']
         }
         user = Users(email=email, code=code, state_data=pickle.dumps(state_data))
         
         if Users.query.filter_by(email=email).first():
             flash(f'User email already exists.', 'danger')
-            return redirect(url_for('interview'))
+            return redirect('interview')
         else:
             db.session.add(user)
             db.session.commit()
             user = Users.query.filter_by(email=email).first()
             flash(f'Congratulations, your prediciton results are ready!', 'success')
-        return redirect(url_for('analyze?code={{ user.code }}'))
+            return redirect(f'analyze?code={user.code}')
     else:
         return render_template("interview.html")
 

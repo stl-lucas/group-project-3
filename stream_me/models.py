@@ -70,7 +70,7 @@ class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(255), unique=False, nullable=True)
     code = db.Column(db.String(5), unique=True, nullable=False)
-    state_data = db.Column(db.String(4000), nullable=True)
+    state_data = db.Column(db.LargeBinary, nullable=True)
 
     def __repr__(self):
         return f"User('{self.id}', '{self.code}', '{self.email}')"
