@@ -23,10 +23,18 @@ def analyze():
         email = request.form['email']
         code = request.form['code']
         user = Users.query.filter_by(code=code).first()
-        state_data = pickle.loads(user.state_data)
-        result = Services.query.filter_by(name=prediction(state_data)).first()
-        flash(f'Congratulations, your prediciton results are ready!', 'success')
-        return redirect(f'analyze?code={user.code}')
+        if user:
+            if user.email == email:
+                state_data = pickle.loads(user.state_data)
+                result = Services.query.filter_by(name=prediction(state_data)).first()
+                flash(f'Congratulations, your prediciton results are ready!', 'success')
+                return redirect(f'analyze?code={user.code}')
+            else:
+                flash(f'Sorry, your email and code did not match! Please try again.', 'danger')
+                return render_template("analyze.html")
+        else:
+            flash(f'Sorry, your previous prediction was not found! Please try again.', 'danger')
+            return render_template("analyze.html")
     else:
         if 'code' in request.args:
             code = request.args['code']

@@ -12,16 +12,6 @@ d3.json(movieUrl).then(function(movieData) {
     d3.json(serviceUrl).then(function(servicesData) {
       
       // TODO: Need code to filter data with user input
-      user_data = {
-            'genres': ["Adventure" , "Comedy", "Sci-Fi"],
-            'children': "True",
-            'ages': ["G", "PG", "PG-13", "R"],
-            'language': ["English"],
-            'countries': ["United States"],
-            'types': ["Movies"],
-            'favorites': ["Back to the Future", "Star Wars: The Empire Strikes Back", "Stranger Things"],
-            'birthdate': 1987
-        }
 
       // Set Variables and Loop Through each Movie
       var xAxis = ['Netflix', 'Hulu', 'Prime', 'Disney']
