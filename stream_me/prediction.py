@@ -10,13 +10,16 @@ def prediction(state_data):
         services.append({
             'service': service.name,
             'movies': 0,
+            'languages': 0,
+            'countries': 0,
             'shows': 0,
             'imdb': 0,
             'imdb_count': 0,
             'tomatoes': 0,
             'tomatoes_count': 0,
             'favs': 0,
-            'price': service.price
+            'year': 0,
+            'price': 20 - service.price
         })
 
     # Get all Movies and Shows
@@ -31,6 +34,9 @@ def prediction(state_data):
             return False
 
     filtered_movies = []
+
+    if state_data['children']:
+        state_data['genres'].append("Family")
 
     for movie in movies:
         if genre(movie):
@@ -48,6 +54,14 @@ def prediction(state_data):
                 services[0]['tomatoes_count'] += 1
             if movie.title in state_data['favorites']:
                 services[0]['favs'] += 1
+            if movie.languages:
+                if bool(set(movie.languages.split(",")) & set(state_data['language'])):
+                    services[0]['languages'] += 1
+            if movie.countries:
+                if bool(set(movie.countries.split(",")) & set(state_data['countries'])):
+                    services[0]['countries'] += 1
+            if movie.year > state_data['birthday']:
+                services[0]['year'] += 1
         if movie.hulu:
             services[1]['movies'] += 1
             if movie.imdb_score:
@@ -58,6 +72,14 @@ def prediction(state_data):
                 services[1]['tomatoes_count'] += 1
             if movie.title in state_data['favorites']:
                 services[1]['favs'] += 1
+            if movie.languages:
+                if bool(set(movie.languages.split(",")) & set(state_data['language'])):
+                    services[1]['languages'] += 1
+            if movie.countries:
+                if bool(set(movie.countries.split(",")) & set(state_data['countries'])):
+                    services[1]['countries'] += 1
+            if movie.year > state_data['birthday']:
+                services[1]['year'] += 1
         if movie.prime:
             services[2]['movies'] += 1
             if movie.imdb_score:
@@ -68,6 +90,14 @@ def prediction(state_data):
                 services[2]['tomatoes_count'] += 1
             if movie.title in state_data['favorites']:
                 services[2]['favs'] += 1
+            if movie.languages:
+                if bool(set(movie.languages.split(",")) & set(state_data['language'])):
+                    services[2]['languages'] += 1
+            if movie.countries:
+                if bool(set(movie.countries.split(",")) & set(state_data['countries'])):
+                    services[2]['countries'] += 1
+            if movie.year > state_data['birthday']:
+                services[2]['year'] += 1
         if movie.disney:
             services[3]['movies'] += 1
             if movie.imdb_score:
@@ -78,6 +108,14 @@ def prediction(state_data):
                 services[3]['tomatoes_count'] += 1
             if movie.title in state_data['favorites']:
                 services[3]['favs'] += 1
+            if movie.languages:
+                if bool(set(movie.languages.split(",")) & set(state_data['language'])):
+                    services[3]['languages'] += 1
+            if movie.countries:
+                if bool(set(movie.countries.split(",")) & set(state_data['countries'])):
+                    services[3]['countries'] += 1
+            if movie.year > state_data['birthday']:
+                services[3]['year'] += 1
 
     # Capturing scores on filtered shows
     for show in shows:
@@ -91,6 +129,8 @@ def prediction(state_data):
                 services[0]['tomatoes_count'] += 1
             if show.title in state_data['favorites']:
                 services[0]['favs'] += 1
+            if show.year > state_data['birthday']:
+                services[0]['year'] += 1
         if show.hulu:
             services[1]['shows'] += 1
             if show.imdb_score:
@@ -101,6 +141,8 @@ def prediction(state_data):
                 services[1]['tomatoes_count'] += 1
             if show.title in state_data['favorites']:
                 services[1]['favs'] += 1
+            if show.year > state_data['birthday']:
+                services[1]['year'] += 1
         if show.prime:
             services[2]['shows'] += 1
             if show.imdb_score:
@@ -111,6 +153,8 @@ def prediction(state_data):
                 services[2]['tomatoes_count'] += 1
             if show.title in state_data['favorites']:
                 services[2]['favs'] += 1
+            if show.year > state_data['birthday']:
+                services[2]['year'] += 1
         if show.disney:
             services[3]['shows'] += 1
             if show.imdb_score:
@@ -121,6 +165,8 @@ def prediction(state_data):
                 services[3]['tomatoes_count'] += 1
             if show.title in state_data['favorites']:
                 services[3]['favs'] += 1
+            if show.year > state_data['birthday']:
+                services[3]['year'] += 1
 
     # Averaging ratings
     for service in services:
@@ -130,25 +176,31 @@ def prediction(state_data):
     # Max category values for normalizing data
     max_movie = max(service['movies'] for service in services)
     max_show = max(service['shows'] for service in services)
+    max_lang = max(service['languages'] for service in services)
+    max_country = max(service['countries'] for service in services)
     max_imdb = max(service['imdb'] for service in services)
     max_tomato = max(service['tomatoes'] for service in services)
     max_favs = max(service['favs'] for service in services)
+    max_year = max(service['year'] for service in services)
     max_price = max(service['price'] for service in services)
 
     # Metric Weights (key to formulating our proprietary algorithm)
     if state_data['types'] == "Movies":
-        movie_weight = 1
-        show_weight = 0.5
-    elif state_data['types'] == "Shows":
-        movie_weight = 0.25
-        show_weight = 2.25
-    else:
         movie_weight = 0.75
-        show_weight = 0.75
-    imdb_weight = 2
-    tomato_weight = 2
-    favs_weight = 4
-    price_weight = 0.5
+        show_weight = 0.25
+    elif state_data['types'] == "Shows":
+        movie_weight = 0
+        show_weight = 1
+    else:
+        movie_weight = 0.5
+        show_weight = 0.5
+    language_weight = 0.5
+    country_weight = 0.5
+    imdb_weight = 0.5
+    tomato_weight = 0.5
+    favs_weight = 3
+    year_weight = 2
+    price_weight = 2
 
     # Normalize service metrics for rating
     normalized_services = services
@@ -157,8 +209,11 @@ def prediction(state_data):
         service.pop('tomatoes_count')
         service['movies'] = round(service['movies'] * 10 / max_movie, 2)
         service['shows'] = round(service['shows'] * 10 / max_show, 2)
+        service['languages'] = round(service['languages'] * 10 / max_lang, 2)
+        service['countries'] = round(service['countries'] * 10 / max_country, 2)
         service['imdb'] = round(service['imdb'] * 10 / max_imdb, 2)
         service['tomatoes'] = round(service['tomatoes'] * 10 / max_tomato, 2)
+        service['year'] = round(service['year'] * 10 / max_year, 2)
         try:
             service['favs'] = round(service['favs'] * 10 / max_favs, 2) 
         except:
@@ -169,9 +224,12 @@ def prediction(state_data):
     for service in normalized_services:
         service['rating'] = round(service['movies'] * movie_weight + 
                                 service['shows'] * show_weight + 
+                                service['languages'] * language_weight + 
+                                service['countries'] * country_weight + 
                                 service['imdb'] * imdb_weight + 
                                 service['tomatoes'] * tomato_weight + 
                                 service['favs'] * favs_weight +
+                                service['year'] * year_weight +
                                 service['price'] * price_weight, 2)
 
     # find max service rating

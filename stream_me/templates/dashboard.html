@@ -1,5 +1,15 @@
 {% extends "layout.html" %}
 {% block content %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <p></p>
+    <div class="alert alert-{{ category }}" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
     <h1>What is stream.me?</h1>
     <p><strong>stream.me</strong> is a service that analyzes the available movies and shows on four of the most popular streaming services. 
         We find out what you're into, then use a proprietary algorithm to select the best streaming service for you.</p>
