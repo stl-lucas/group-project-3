@@ -2,6 +2,7 @@ from flask import render_template, url_for, flash, redirect, request, jsonify
 from stream_me import app, db
 from stream_me.models import Services, Movies, Shows, Genres, Countries, Languages, Users
 from stream_me.prediction import prediction
+from stream_me.feildArray import ensureFieldsAreArrays
 from stream_me.codeUtility import generateCode
 import json, requests
 import pickle
@@ -50,13 +51,16 @@ def interview():
     if request.method == 'POST':
         email = request.form['InputEmail']
         code = generateCode(5)
+
+        genres, languages, countries, favorites = ensureFieldsAreArrays()
+
         state_data = {
-            'genres': request.form['moviesandtvshowsgenre'],
+            'genres': genres,
             'children': request.form['moviesandtvshowschildren'],
-            'language': request.form['moviesandtvshowslanguage'],
-            'countries': request.form['moviesandtvshowscountries'],
+            'language': languages,
+            'countries': countries,
             'types': request.form['moviesandtvshowstypes'],
-            'favorites': request.form['moviesandtvshowsfavorites'],
+            'favorites': favorites,
             'birthday': request.form['moviesandtvshowsbirthday'],
             'pay': request.form['moviesandtvshowspay']
         }
@@ -73,6 +77,7 @@ def interview():
             return render_template('user.html', user=user)
     else:
         return render_template("interview.html")
+
 
 @app.route("/user")
 def user():
