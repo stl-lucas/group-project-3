@@ -50,13 +50,16 @@ def interview():
     if request.method == 'POST':
         email = request.form['InputEmail']
         code = generateCode(5)
+
+        genres, languages, countries, favorites = ensureFieldsAreArrays()
+
         state_data = {
-            'genres': request.form['moviesandtvshowsgenre'],
+            'genres': genres,
             'children': request.form['moviesandtvshowschildren'],
-            'language': request.form['moviesandtvshowslanguage'],
-            'countries': request.form['moviesandtvshowscountries'],
+            'language': languages,
+            'countries': countries,
             'types': request.form['moviesandtvshowstypes'],
-            'favorites': request.form['moviesandtvshowsfavorites'],
+            'favorites': favorites,
             'birthday': request.form['moviesandtvshowsbirthday'],
             'pay': request.form['moviesandtvshowspay']
         }
@@ -73,6 +76,37 @@ def interview():
             return redirect(f'analyze?code={user.code}')
     else:
         return render_template("interview.html")
+
+def ensureFieldsAreArrays():
+    genreField = request.form['moviesandtvshowsgenre']
+    languageField = request.form['moviesandtvshowslanguage']
+    countryField = request.form['moviesandtvshowscountries']
+    favoritesField = request.form['moviesandtvshowsfavorites']
+
+    # Genres - make sure it's an array.
+    if isinstance(genreField,list):
+        genres = genreField
+    else:
+        genres = [genreField]
+
+    # Languages - make sure it's an array.
+    if isinstance(languageField,list):
+        languages = languageField
+    else:
+        languages = [languageField]
+
+    # Countries - make sure it's an array.
+    if isinstance(countryField,list):
+        countries = countryField
+    else:
+        countries = [countryField]
+
+    # Favorites - make sure it's an array.
+    if isinstance(favoritesField,list):
+        favorites = favoritesField
+    else:
+        favorites = [favoritesField]
+    return genres, languages, countries, favorites
 
 @app.route("/api")
 def api():
