@@ -1,18 +1,7 @@
 from stream_me.models import Movies, Shows, Services
 
 # PREDICTION TOOL
-def prediction():
-    # define user data
-    user_data = {
-        'genres': ["Animation" , "Family", "Sci-Fi"],
-        'children': True,
-        'ages': ["G", "PG", "PG-13", "R"],
-        'language': ["English"],
-        'countries': ["United States"],
-        'type': "Both",
-        'favorites': ["The Lion King", "Toy Story", "Finding Nemo"],
-        'birthdate': 1987
-    }
+def prediction(state_data):
 
     # define service rating dictionaries
     raw_services = Services.query.all()
@@ -37,10 +26,7 @@ def prediction():
     # Filter titles by Favorite Genres
     def genre(movie):
         if movie.genres:
-            if bool(set(movie.genres.split(",")) & set(user_data['genres'])):
-                return True
-            else:
-                return False
+            return bool(set(movie.genres.split(",")) & set(state_data['genres']))
         else:
             return False
 
@@ -60,7 +46,7 @@ def prediction():
             if movie.rotten_tomatoes:
                 services[0]['tomatoes'] += movie.rotten_tomatoes
                 services[0]['tomatoes_count'] += 1
-            if movie.title in user_data['favorites']:
+            if movie.title in state_data['favorites']:
                 services[0]['favs'] += 1
         if movie.hulu:
             services[1]['movies'] += 1
@@ -70,7 +56,7 @@ def prediction():
             if movie.rotten_tomatoes:
                 services[1]['tomatoes'] += movie.rotten_tomatoes
                 services[1]['tomatoes_count'] += 1
-            if movie.title in user_data['favorites']:
+            if movie.title in state_data['favorites']:
                 services[1]['favs'] += 1
         if movie.prime:
             services[2]['movies'] += 1
@@ -80,7 +66,7 @@ def prediction():
             if movie.rotten_tomatoes:
                 services[2]['tomatoes'] += movie.rotten_tomatoes
                 services[2]['tomatoes_count'] += 1
-            if movie.title in user_data['favorites']:
+            if movie.title in state_data['favorites']:
                 services[2]['favs'] += 1
         if movie.disney:
             services[3]['movies'] += 1
@@ -90,7 +76,7 @@ def prediction():
             if movie.rotten_tomatoes:
                 services[3]['tomatoes'] += movie.rotten_tomatoes
                 services[3]['tomatoes_count'] += 1
-            if movie.title in user_data['favorites']:
+            if movie.title in state_data['favorites']:
                 services[3]['favs'] += 1
 
     # Capturing scores on filtered shows
@@ -103,7 +89,7 @@ def prediction():
             if show.rotten_tomatoes:
                 services[0]['tomatoes'] += show.rotten_tomatoes
                 services[0]['tomatoes_count'] += 1
-            if show.title in user_data['favorites']:
+            if show.title in state_data['favorites']:
                 services[0]['favs'] += 1
         if show.hulu:
             services[1]['shows'] += 1
@@ -113,7 +99,7 @@ def prediction():
             if show.rotten_tomatoes:
                 services[1]['tomatoes'] += show.rotten_tomatoes
                 services[1]['tomatoes_count'] += 1
-            if show.title in user_data['favorites']:
+            if show.title in state_data['favorites']:
                 services[1]['favs'] += 1
         if show.prime:
             services[2]['shows'] += 1
@@ -123,7 +109,7 @@ def prediction():
             if show.rotten_tomatoes:
                 services[2]['tomatoes'] += show.rotten_tomatoes
                 services[2]['tomatoes_count'] += 1
-            if show.title in user_data['favorites']:
+            if show.title in state_data['favorites']:
                 services[2]['favs'] += 1
         if show.disney:
             services[3]['shows'] += 1
@@ -133,7 +119,7 @@ def prediction():
             if show.rotten_tomatoes:
                 services[3]['tomatoes'] += show.rotten_tomatoes
                 services[3]['tomatoes_count'] += 1
-            if show.title in user_data['favorites']:
+            if show.title in state_data['favorites']:
                 services[3]['favs'] += 1
 
     # Averaging ratings
@@ -150,10 +136,10 @@ def prediction():
     max_price = max(service['price'] for service in services)
 
     # Metric Weights (key to formulating our proprietary algorithm)
-    if user_data['type'] == "Movies":
+    if state_data['types'] == "Movies":
         movie_weight = 1
         show_weight = 0.5
-    elif user_data['type'] == "Shows":
+    elif state_data['types'] == "Shows":
         movie_weight = 0.25
         show_weight = 2.25
     else:
