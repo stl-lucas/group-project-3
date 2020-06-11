@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <p></p>
+    <div class="alert alert-{{ category }}" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+   <h3>User Interview</h3>
+   {% if user is not defined %}
+   <p>Sorry, the user profile you were looking for could not be found. Please go back and try again.</p>
+   {% else %}
+   <div class="row">
+    <div class="col-md-6">
+        <div class="card-body">
+            <ul>
+                <li>Email: {{ user.email }}</li>
+                <li>Code: {{ user.code }}</li>
+            </ul>
+        </div>
+        <a class="btn btn-secondary mb-2 ml-2" href="/analyze?code={{ user.code }}" role="button">Load User Analysis</a>        </div>
+    </div>
+   {% endif %}
+{% endblock content %}

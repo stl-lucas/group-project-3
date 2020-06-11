@@ -70,9 +70,13 @@ def interview():
             db.session.commit()
             user = Users.query.filter_by(email=email).first()
             flash(f'Congratulations, your prediciton results are ready!', 'success')
-            return redirect(f'analyze?code={user.code}')
+            return render_template('user.html', user=user)
     else:
         return render_template("interview.html")
+
+@app.route("/user")
+def user():
+    return render_template("user.html")
 
 @app.route("/api")
 def api():

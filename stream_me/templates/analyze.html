@@ -102,9 +102,42 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <h1>IMDb</h1>
+                <div id="scatter"></div>
+                <div class="article">
+                    <h2>The Top 20 Directors with highest IMDb Ratings</h2>
+                    <li>David Letterman</li>
+                    <li>Fen Tian</li>
+                    <li>Miguel Gaudncio</li>
+                    <li>Roger Donaldson</li>
+                    <li>Danny Wu</li> 
+                    <li>Mahesh Manjrekar</li>
+                    <li>Rel Dowdell</li>  
+                    <li>Chris Leslie</li> 
+                    <li>Gorman Bechard</li>  
+                    <li>Paul Kakert</li>
+                    <li>Christopher Nolan</li>  
+                    <li>Tyrone D. Dixon</li>
+                    <li>TLaura Gamse</li>  
+                    <li>Franßois Girard</li>   
+                    <li>Ethan H. Minsker</li>  
+                    <li>Priyadarshan</li>  
+                    <li>Alan Berg</li>  
+                    <li>Robert Rippberger</li> 
+                    <li>Samuel Rich</li>  
+                    <li>Matthew Millan</li> <br>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
     <script src="{{ url_for('static', filename='js/logic.js') }}"></script>
     <script src="{{ url_for('static', filename='js/scatterPlot.js') }}"></script>
     <script src="{{ url_for('static', filename='js/genreBar.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/Nate_Scatter.js') }}"></script>
 {% endblock content %}

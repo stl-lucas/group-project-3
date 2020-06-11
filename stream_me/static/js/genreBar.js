@@ -67,8 +67,6 @@ d3.json(movieUrl).then(function (movieData) {
                 }
             });
 
-            console.log(genreCounts);
-
             // servicesData.forEach(function (data) {
             //     if (data.name === "Netflix") {
             //         yPrice[0] = data.price;
