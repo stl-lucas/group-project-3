@@ -61,7 +61,7 @@ def interview():
             'countries': countries,
             'types': request.form['moviesandtvshowstypes'],
             'favorites': favorites,
-            'birthday': request.form['moviesandtvshowsbirthday'],
+            'birthday': int(request.form['moviesandtvshowsbirthday']),
             'pay': request.form['moviesandtvshowspay']
         }
         user = Users(email=email, code=code, state_data=pickle.dumps(state_data))

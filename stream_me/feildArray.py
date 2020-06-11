@@ -1,3 +1,5 @@
+from flask import request
+
 def ensureFieldsAreArrays():
     genreField = request.form['moviesandtvshowsgenre']
     languageField = request.form['moviesandtvshowslanguage']

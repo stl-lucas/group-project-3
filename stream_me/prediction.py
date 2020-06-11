@@ -3,6 +3,8 @@ from stream_me.models import Movies, Shows, Services
 # PREDICTION TOOL
 def prediction(state_data):
 
+    state_data['birthday'] = int(state_data['birthday'])
+
     # define service rating dictionaries
     raw_services = Services.query.all()
     services = []
@@ -207,18 +209,42 @@ def prediction(state_data):
     for service in normalized_services:
         service.pop('imdb_count')
         service.pop('tomatoes_count')
-        service['movies'] = round(service['movies'] * 10 / max_movie, 2)
-        service['shows'] = round(service['shows'] * 10 / max_show, 2)
-        service['languages'] = round(service['languages'] * 10 / max_lang, 2)
-        service['countries'] = round(service['countries'] * 10 / max_country, 2)
-        service['imdb'] = round(service['imdb'] * 10 / max_imdb, 2)
-        service['tomatoes'] = round(service['tomatoes'] * 10 / max_tomato, 2)
-        service['year'] = round(service['year'] * 10 / max_year, 2)
+        try:
+            service['movies'] = round(service['movies'] * 10 / max_movie, 2)
+        except:
+            service['movies'] = 0
+        try:
+            service['shows'] = round(service['shows'] * 10 / max_show, 2)
+        except:
+            service['shows'] = 0
+        try:
+            service['languages'] = round(service['languages'] * 10 / max_lang, 2)
+        except:
+            service['languages'] = 0
+        try:
+            service['countries'] = round(service['countries'] * 10 / max_country, 2)
+        except:
+            service['countries'] = 0
+        try:
+            service['imdb'] = round(service['imdb'] * 10 / max_imdb, 2)
+        except:
+            service['imdb'] = 0
+        try:
+            service['tomatoes'] = round(service['tomatoes'] * 10 / max_tomato, 2)
+        except:
+            service['tomatoes'] = 0
+        try:
+            service['year'] = round(service['year'] * 10 / max_year, 2)
+        except:
+            service['year'] = 0
         try:
             service['favs'] = round(service['favs'] * 10 / max_favs, 2) 
         except:
             service['favs'] = 0
-        service['price'] = round(service['price'] * 10 / max_price, 2)
+        try:
+            service['price'] = round(service['price'] * 10 / max_price, 2)
+        except:
+            service['price'] = 0
 
     # Service rating calculation
     for service in normalized_services:
