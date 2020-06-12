@@ -118,7 +118,7 @@ d3.json(movieUrl).then(function (movieData) {
             }];
 
             var layout = {
-                title: 'Genres by Service',
+                title: 'Top 5 Genres of Each Service',
                 annotations: [
                     {
                         font: {
