@@ -55,8 +55,6 @@ d3.json(movieUrl).then(function (movieData) {
                 }
             });
 
-            console.log(genreCounts);
-
             //Filter down to top 10
             // netflixTopTen = Object.entries(genreCounts.netflix)
             // .sort((a, b) => {
