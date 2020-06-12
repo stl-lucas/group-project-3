@@ -12,18 +12,25 @@
     {% endwith %}
    <h3>User Interview</h3>
    <form action="/interview" method="post">
-      <p>
-         What is the most you are willing to pay for online streaming service?
-         <select class="custom-select" name="moviesandtvshowspay">
+      <div class="form-group">
+        <label for="">What is the most you are willing to pay for online streaming service?</label>
+        <!-- input type="text" name="moviesandtvshowspay_2" id="moviesandtvshowspay_2" class="form-control" -->
+        <select class="custom-select" name="moviesandtvshowspay">
             <option selected>Please select here</option>
             <option value="1">$5-$8</option>
             <option value="2">$9-$13</option>
             <option value="3">$14-$20</option>
          </select>
-      </p>
+      </div>
+
+      <div class="form-group">
+        <label for="">What is your birthday?</label>
+        <input type="text" id="birthdate" name="moviesandtvshowsbirthday" class="form-control">
+      </div>
+
       <p>
          What year group you were you born in?
-         <select class="custom-select" name="moviesandtvshowsbirthday">
+         <select class="custom-select" name="moviesandtvshowsbirthday_orig">
             <option selected>Please select here</option>
             <option value="1">1965-1970</option>
             <option value="2">1971-1975</option>
@@ -35,8 +42,14 @@
             <option value="8">2001-2005</option>
          </select>
       </p>
+
+      <div class="form-group">
+        <label for="moviesandtvshowsgenre"></label>
+        <input type="text" name="moviesandtvshowsgenre" id="moviesandtvshowsgenre" class="form-control" data-role="tagsinput">
+      </div>
+
       What is your favorite Movie or Tv Show Genre?
-      <select class="custom-select" name="moviesandtvshowsgenre">
+      <select class="custom-select" name="moviesandtvshowsgenre_orig">
          <option selected>Please select here</option>
          <option value="1">Action & Comedy</option>
          <option value="2">Comedy & Drama</option>
@@ -48,9 +61,20 @@
          <option value="8">Documentary</option>
       </select>
       </p>
-      <p>
+
+       <div class="form-group">
+         <label for="moviesandtvshowslanguage">What language do you view Movies and Tv Shows in?</label>
+         <input type="text" name="moviesandtvshowslanguage" id="moviesandtvshowslanguage" class="form-control" data-role="tagsinput">
+       </div>
+ 
+       <div class="form-group">
+         <label for="moviesandtvshowscountries">Which countries would you like to you view your specific Movies and Tv Shows from?</label>
+         <input type="text" name="moviesandtvshowscountries" id="moviesandtvshowscountries" class="form-control" data-role="tagsinput">
+       </div>
+ 
+         <p>
          What language do you view Movies and Tv Shows in?
-         <select class="custom-select" name="moviesandtvshowslanguage">
+         <select class="custom-select" name="moviesandtvshowslanguage_orig">
             <option selected>Please select here</option>
             <option value="1">English</option>
             <option value="2">Japanese</option>
@@ -125,7 +149,7 @@
       </p>
       <p>
          Which countries would you like to you view your specific Movies and Tv Shows from?
-         <select class="custom-select" name="moviesandtvshowscountries">
+         <select class="custom-select" name="moviesandtvshowscountries_orig">
             <option selected>Please select here</option>
             <option value="1">United States</option>
             <option value="2">United Kingdom</option>
@@ -231,5 +255,13 @@
          <small name="InputEmail" class="form-text text-muted">We won't sell your email address!</small>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
+   </div>
    </form>
 {% endblock content %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='js/typeahead.bundle.js') }}"></script>
+<script src="{{ url_for('static', filename='js/tagsinput.js') }}"></script>
+<script src="{{ url_for('static', filename='js/interview.js') }}"></script>
+{% endblock script %}
+
